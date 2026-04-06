@@ -10,11 +10,13 @@ try:
     from .database import Base, engine
     from .routes.auth import router as auth_router
     from .routes.activities import router as activities_router
+    from .routes.users import router as users_router
     from . import models
 except ImportError:
     from database import Base, engine
     from routes.auth import router as auth_router
     from routes.activities import router as activities_router
+    from routes.users import router as users_router
     import models
 
 load_dotenv()
@@ -42,6 +44,7 @@ os.makedirs(uploads_dir, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 app.include_router(auth_router, prefix="/auth", tags=["auth"])
 app.include_router(activities_router, prefix="/activities", tags=["activities"])
+app.include_router(users_router, prefix="/users", tags=["users"])
 
 
 @app.get("/health")

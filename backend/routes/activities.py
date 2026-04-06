@@ -4,10 +4,12 @@ import uuid
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
+from typing import List
 
 try:
     from ..database import get_db
     from ..models import Activity, Credit, User
+    from ..schemas import ActivityResponse
     from ..services.ai_service import calculate_credits, verify_photo
     from ..services.exif_service import extract_gps
     from ..services.hash_service import get_hash, is_duplicate
@@ -15,6 +17,7 @@ try:
 except ImportError:
     from database import get_db
     from models import Activity, Credit, User
+    from schemas import ActivityResponse
     from routes.auth import get_current_user
     from services.ai_service import calculate_credits, verify_photo
     from services.exif_service import extract_gps
@@ -23,6 +26,36 @@ except ImportError:
 # Must match uploads_dir from main.py
 UPLOADS_DIR = "uploads"
 router = APIRouter()
+
+@router.get("/my", response_model=List[ActivityResponse])
+async def get_my_activities(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Retrieve activity history for the current user.
+    """
+    activities = (
+        db.query(Activity)
+        .filter(Activity.user_id == current_user.id)
+        .order_by(Activity.created_at.desc())
+        .all()
+    )
+    
+    # Map ai_verdict to status
+    return [
+        ActivityResponse(
+            id=a.id,
+            activity_type=a.activity_type,
+            quantity=a.quantity,
+            credits_earned=a.credits_earned,
+            status=a.ai_verdict,
+            ai_explanation=a.ai_explanation,
+            tx_hash=a.tx_hash,
+            created_at=a.created_at.isoformat()
+        )
+        for a in activities
+    ]
 
 @router.post("/submit")
 async def submit_activity(
