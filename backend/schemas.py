@@ -37,6 +37,8 @@ class ActivityResponse(BaseModel):
     status: str
     ai_explanation: str | None = None
     tx_hash: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
     created_at: str  # We'll format this as a string in the response
 
     @classmethod
@@ -50,5 +52,7 @@ class ActivityResponse(BaseModel):
             status=obj.ai_verdict,
             ai_explanation=obj.ai_explanation,
             tx_hash=obj.tx_hash,
+            latitude=obj.latitude,
+            longitude=obj.longitude,
             created_at=obj.created_at.isoformat()
         )

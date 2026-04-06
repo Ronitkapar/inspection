@@ -52,6 +52,8 @@ async def get_my_activities(
             status=a.ai_verdict,
             ai_explanation=a.ai_explanation,
             tx_hash=a.tx_hash,
+            latitude=a.latitude,
+            longitude=a.longitude,
             created_at=a.created_at.isoformat()
         )
         for a in activities
@@ -155,5 +157,7 @@ async def submit_activity(
 
     return {
         "tx_hash": tx_hash,
-        "credits_earned": credits_earned
+        "credits_earned": credits_earned,
+        "latitude": new_activity.latitude,
+        "longitude": new_activity.longitude
     }
