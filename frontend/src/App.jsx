@@ -4,9 +4,9 @@ import { healthCheck } from "./api";
 import Navbar from "./components/Navbar";
 import DashboardPage from "./pages/DashboardPage";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
 import MarketplacePage from "./pages/MarketplacePage";
-import SignupPage from "./pages/SignupPage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import SubmitPage from "./pages/SubmitPage";
 
 function App() {
@@ -31,8 +31,8 @@ function App() {
       <main className="page-frame">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/submit" element={<SubmitPage />} />
           <Route path="/marketplace" element={<MarketplacePage />} />

@@ -1,0 +1,18 @@
+Waiting for server to start...
+INFO:     Started server process [12406]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57194 - "GET /health HTTP/1.1" 200 OK
+{"status":"ok"}Signing up test user...
+INFO:     127.0.0.1:57200 - "POST /auth/signup HTTP/1.1" 400 Bad Request
+{"detail":"User with this email or username already exists"}Logging in...
+INFO:     127.0.0.1:57210 - "POST /auth/login HTTP/1.1" 200 OK
+Creating dummy image...
+Submitting activity...
+INFO:     127.0.0.1:57212 - "POST /activities/submit HTTP/1.1" 400 Bad Request
+Response: {"detail":"The image provided is a solid green square and does not contain any trees, neem species, or evidence of the claimed activity."}
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [12406]
